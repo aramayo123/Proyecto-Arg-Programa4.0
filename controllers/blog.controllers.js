@@ -11,11 +11,12 @@ ctrl.crearPublicacion = async (req, res) => {
         await publicacion.save()
 
         return res.json({
-            msg: 'Publicación guardada con éxito xd!',
+            msg: 'Publicación guardada con éxito!',
             publicacion
         })
     } catch (error) {
-        console.log(error.message);
+        //console.log(error.message);
+        //console.log(req.body.autor);
         return res.status(500).json({
             msg: "Error al crear nueva Publicación!"
         })

@@ -1,8 +1,13 @@
 <%-include('partials/header')  %>
 <%-include('partials/navbar')  %>
 
-
 <div class="container">
+    <div class="row mt-4">
+        <div class="col" id="mensajes">
+            
+        </div>
+    </div>
+
     <div class="row mt-4">
         <div class="col">
             <h1 class="text-center">Nueva Publicación</h1>
@@ -13,18 +18,27 @@
         <form action="" id="nueva-publicacion">
 
             <div class="mb-3">
-                <input type="text" class="form-control" id="titulo" placeholder="Titulo">
+                <input type="text" class="form-control" id="autor" placeholder="Autor de la publicacion..." >
+                <h6 class="my-2 text-danger" id="error_autor"></h6>
+            </div>
+
+            <div class="mb-3">
+                <input type="text" class="form-control" id="titulo" placeholder="Titulo" >
+                <h6 class="my-2 text-danger" id="error_titulo"></h6>
             </div>
             <div class="form-floating mb-3">
                 <textarea class="form-control" placeholder="Leave a comment here" id="detalle"
-                    style="height: 100px"></textarea>
+                    style="height: 100px" ></textarea>
                 <label for="detalle">Detalle</label>
+                <h6 class="my-2 text-danger" id="error_detalle"></h6>
             </div>
             <div class="mb-3">
-                <input type="text" class="form-control" id="url_imagen" placeholder="url imagen">
+                <input type="text" class="form-control" id="url_imagen" placeholder="url imagen" >
+                <h6 class="my-2 text-danger" id="error_url_imagen"></h6>
             </div>
             <div class="mb-3">
-                <input type="date" class="form-control" name="" id="fecha">
+                <input type="date" class="form-control" name="" id="fecha" >
+                <h6 class="my-2 text-danger" id="error_fecha"></h6>
             </div>
 
             <button type="submit" class="btn btn-primary btn-sm">
