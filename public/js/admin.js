@@ -1,78 +1,60 @@
+const mostrarPublicaciones = (publicaciones, elementoHtml) => {
 
-
-const formNuevo = document.querySelector('#nueva-publicacion');
-var lastTimeout;
-
-formNuevo.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    let inputs = formNuevo.querySelectorAll("input, textarea");
-    let mensajes = document.querySelector('#mensajes');
-    let cortar = false;
-    mensajes.innerHTML = ``;
-
-    inputs.forEach( (input) => {
-        let error = document.querySelector(`#error_${input.id}`);
-        error.innerHTML = ``;
-        input.classList.remove("input-good");
-        input.classList.remove("input-warning");
-        if(!input.value.length){
-            error.innerHTML = `El campo ${input.id} es requerido`;
-            input.classList.add("input-warning");
-            cortar = true;
-        }else
-            input.classList.add("input-good");
+    let secciones = "";
+    publicaciones.forEach( (pub) => {
+        secciones += `
+            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    ${pub.titulo}
+                </th>
+                <td class="px-6 py-4">
+                    ${pub.autor}
+                </td>
+                <td class="px-6 py-4">
+                    <img class="w-1/3 h-1/2" width="150" src="${pub.url_imagen}" alt="${pub.titulo}">
+                </td>
+                <td class="px-6 py-4">
+                    ${pub.fecha}
+                </td>
+                <td class="px-6 py-4">
+                    <div class="flex flex-cols-2 gap-5">
+                        <a href="/editar/${pub.id}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Editar</a>
+                        <button onclick="EliminarPublicacion(${pub.id})" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Eliminar</button>
+                    </div>
+                </td>
+            </tr>
+        `
     })
 
-    if(cortar){
-        mensajes.innerHTML = `
-            <div class="bg-danger rounded w-50 container py-2">
-                <h4 class="text-center">Por favor revisa los campos marcados</h4>
-            </div>
-        `;
-        clearTimeout(lastTimeout);
-        lastTimeout = setTimeout(() => {
-            mensajes.innerHTML = "";
-        }, 3000);
-        return
-    }
-        
+    elementoHtml.innerHTML = secciones;
+    
+}
 
-    const data = {
-        autor: document.querySelector('#autor').value,
-        titulo: document.querySelector('#titulo').value,
-        detalle: document.querySelector('#detalle').value,
-        url_imagen: document.querySelector('#url_imagen').value,
-        fecha: document.querySelector('#fecha').value,
-    }
+const obtenerPublicaicones = async () => {
+    const response = await fetch('/publicaciones')
+    const data = await response.json()
+    return data;
+}
 
 
+
+document.addEventListener('DOMContentLoaded', async () => {
+    
+    const publicaciones = await obtenerPublicaicones()
+    const main = document.querySelector('#cargar-tabla')
+    mostrarPublicaciones(publicaciones, main)
+})
+
+async function EliminarPublicacion(id){
+    const url = '/publicacion/' + id;
     // Enviar los datos al servidor para crear la nueva publicación
-    const respuesta = await fetch('/publicacion', {
-        method: "POST",
+    const respuesta = await fetch(url, {
+        method: "DELETE",
         headers: {
             'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
+        }
     })
-
-    const datos = await respuesta.json()
-    console.log(datos);
-
-    mensajes.innerHTML = `
-        <div class="bg-success rounded w-50 container py-2">
-            <h4 class="text-center">${datos.msg}</h4>
-        </div>
-    `;
-    clearTimeout(lastTimeout);
-    lastTimeout = setTimeout(() => {
-        mensajes.innerHTML = "";
-    }, 3000);
-
-    inputs.forEach( (input) => {
-        input.classList.remove("input-good");
-        input.classList.remove("input-warning");
-    });
-    
-    formNuevo.reset();
-    //location.href = "/"
-})
+    const datos = await respuesta.json();
+    alert(datos.msg);
+    location.href = "/admin";
+}

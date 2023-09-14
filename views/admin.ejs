@@ -1,57 +1,39 @@
 <%-include('partials/header')  %>
 <%-include('partials/navbar')  %>
 
-<div class="container">
-    <div class="row mt-4">
-        <div class="col" id="mensajes">
-            
-        </div>
-    </div>
-
-    <div class="row mt-4">
-        <div class="col">
-            <h1 class="text-center">Nueva Publicación</h1>
-        </div>
-    </div>
-    <div class="row col-md-5 mx-auto">
-
-        <form action="" id="nueva-publicacion">
-
-            <div class="mb-3">
-                <input type="text" class="form-control" id="autor" placeholder="Autor de la publicacion..." >
-                <h6 class="my-2 text-danger" id="error_autor"></h6>
-            </div>
-
-            <div class="mb-3">
-                <input type="text" class="form-control" id="titulo" placeholder="Titulo" >
-                <h6 class="my-2 text-danger" id="error_titulo"></h6>
-            </div>
-            <div class="form-floating mb-3">
-                <textarea class="form-control" placeholder="Leave a comment here" id="detalle"
-                    style="height: 100px" ></textarea>
-                <label for="detalle">Detalle</label>
-                <h6 class="my-2 text-danger" id="error_detalle"></h6>
-            </div>
-            <div class="mb-3">
-                <input type="text" class="form-control" id="url_imagen" placeholder="url imagen" >
-                <h6 class="my-2 text-danger" id="error_url_imagen"></h6>
-            </div>
-            <div class="mb-3">
-                <input type="date" class="form-control" name="" id="fecha" >
-                <h6 class="my-2 text-danger" id="error_fecha"></h6>
-            </div>
-
-            <button type="submit" class="btn btn-primary btn-sm">
-                Guardar
-            </button>
-
-        </form>
-
-
+<div class="w-4/5 mx-auto my-5 bg-gray-700 text-gray-400 m-2">
+    <div class="flex flex-cols-2 justify-between">
+        <a class="p-2 m-2 bg-blue-500 rounded text-white" href="/crear">Crear publicacion</a>
     </div>
 </div>
 
+<div class="relative overflow-x-auto">
+    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400" >
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+                <th scope="col" class="px-6 py-3">
+                    Titulo
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Autor
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Imagen
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Fecha
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Acciones
+                </th>
+            </tr>
+        </thead>
+        <tbody id="cargar-tabla">
+            
+            
+        </tbody>
+    </table>
+</div>
 
 <script src="/js/admin.js"></script>
-
 <%-include('partials/footer')  %>

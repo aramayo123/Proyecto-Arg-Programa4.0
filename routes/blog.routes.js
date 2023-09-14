@@ -6,7 +6,7 @@ const {
     obtenerPublicacion,
     obtenerPublicaciones,
 } = require('../controllers/blog.controllers');
-
+const Publicacion = require('../models/Publicacion');
 // ====================================================
 //          Rutas para manejar Vistas (views)
 // ====================================================
@@ -18,6 +18,25 @@ router.get('/admin', (req, res) => {
     res.render('admin')
 })
 
+router.get('/crear', (req, res) => {
+    res.render('crear')
+})
+
+router.get('/editar/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const publicacion = await Publicacion.findByPk(id);
+        
+        return res.render('editar', {
+            publicacion: publicacion
+        });
+    } catch (error) {
+        console.log(error.message)
+        return res.status(500).json({
+            msg: "Error al obtener Publicación!"
+        })
+    }
+})
 
 // ====================================================
 //              Rutas para manejar Datos

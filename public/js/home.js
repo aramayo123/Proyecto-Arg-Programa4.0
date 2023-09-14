@@ -3,15 +3,18 @@ const mostrarPublicaciones = (publicaciones, elementoHtml) => {
     let secciones = "";
     publicaciones.forEach( (pub) => {
         secciones += `
-            <section class="d-flex gap-2">
-                <img src="${pub.url_imagen}" class="rounded" height="200" width="200" alt="${pub.titulo}" >
-                <div class="d-flex flex-column justify-content-between">
-                    <h4>${pub.titulo}</h4>
-                    <p>${pub.detalle}</p>
-                    <p>${pub.fecha}</p>
+            <div class="max-w-sm rounded overflow-hidden shadow-lg">
+                <img class="w-1/3 h-1/2" width="150" src="${pub.url_imagen}" alt="${pub.titulo}">
+                <div class="px-6 py-4">
+                    <div class="font-bold text-xl mb-2">${pub.titulo}</div>
+                    <p class="text-gray-700 text-base">
+                    ${pub.detalle}
+                    </p>
                 </div>
-            </section>
-
+                <div class="px-6 pt-4 pb-2">
+                    <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">${pub.fecha}</span>
+                </div>
+            </div>
         `
     })
 
